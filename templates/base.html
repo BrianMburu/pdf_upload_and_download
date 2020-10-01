@@ -1,0 +1,333 @@
+{% load static %}
+{% load common %}
+{% load cloudinary %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>EduApp</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap-->
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  <!--fontAwesome-->
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- slick slider -->
+  <link rel="stylesheet" href="{% static 'learning_plat/slick.css' %}">
+  <!-- themefy-icon -->
+  <link rel="stylesheet" href="{% static 'learning_plat/themnify-icons.css' %}">
+  <!-- animation css -->
+  <link rel="stylesheet" href="{% static 'learning_plat/animate.css.css' %}">
+  <!-- aos -->
+  <link rel="stylesheet" href="{% static 'learning_plat/aos.css' %}">
+  <!-- venobox popup -->
+  <link rel="stylesheet" href="{% static 'learning_plat/venobox.css' %}">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" type="text/css" href="{% static 'learning_plat/style.css' %}">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="{% static 'images/favicorn.png' %}" type="image/x-icon">
+  <link rel="icon" href="{% static 'images/favicorn.png' %}" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- preloader start -->
+  <div class="preloader">
+    <img src="{% static 'images/preloader.gif' %}" alt="preloader">
+  </div>
+  <!-- preloader end -->
+
+<!-- header -->
+{% if not form %}
+<header class="fixed-top header">
+  <!-- top header -->
+  <div class="top-header py-2 bg-white">
+    <div class="container">
+      <div class="row no-gutters">
+        <div class="col-lg-4 text-center text-lg-left">
+          <a class="text-color mr-3" href="callto:+254717297097"><strong>CALL</strong> +254 (7) 1729 7097</a>
+          <ul class="list-inline d-inline">
+            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="fa fa-facebook"></i></a></li>
+            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="fa fa-twitter "></i></a></li>
+            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="fa fa-linkedin"></i></a></li>
+            <li class="list-inline-item mx-0"><a class="d-inline-block p-2 text-color" href="#"><i class="fa fa-instagram"></i></a></li>
+          </ul>
+        </div>	
+        <div class="col-lg-8 text-center ">
+          <ul class="list-inline">
+            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="#Comingsoon">notice</a></li>
+            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="{% url 'book_list' %}">research</a></li>
+            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="{% url 'users:sign-up' %}" >signup</a></li> 
+            {# Some logic on what to display for last item#}
+            {% if user.is_authenticated %}
+            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="{% url 'logout' %}" >logout</a></li>
+            <li class="list-inline-item">
+              <div class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block">
+                <a>Welcome Back!&nbsp</a>
+                <i class="fa fa-user" aria-hidden="true"></i>
+                {{ request.user }}
+             </div>
+            </li>
+            {% else %}
+            <li class="list-inline-item"><a class="text-uppercase text-color p-sm-2 py-2 px-0 d-inline-block" href="{% url 'login' %}" >login</a></li>
+            {% endif %} 
+          </ul>
+        </div>
+        <div id="search-area" style="top: 1em;right: 1.5em;" class="search-area  item-lg-right">
+          <a href="{% url 'searched_books' %}" class="icon"><i class="fa fa-search"></i></a>
+          <!--<form class="search-form" action=""method = "post">
+            {% csrf_token %}
+            <input type="text" placeholder="ex: Search course" name="search">
+            <button value="search " type="submit"><i class="fa fa-search"></i></button>
+          </form>-->
+        </div>
+      </div>	
+    </div>
+  </div>
+  <!-- navbar -->
+  <div class="navigation w-100">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light p-0">
+        <a class="navbar-brand" href="{% url 'users:home' %}"><img src="{% static 'images/EduApplogo.png' %}" alt="logo"></a>
+        <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation"
+          aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navigation">
+          <ul class="navbar-nav ml-auto text-center">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'users:home' %}">Home</a>
+            </li>
+            <li class="nav-item @@about">
+              <a class="nav-link" href="{% url 'users:aboutus' %}">About</a>
+            </li>
+            <li class="nav-item @@courses">
+              <a class="nav-link" href="{% url 'users:course' %}">COURSES</a>
+            </li>
+            <li class="nav-item @@events">
+              <a class="nav-link" href="{% url 'users:dashboard' %}">Dashboard</a>
+            </li>
+            <li class="nav-item @@blog">
+              <a class="nav-link" href="#coomingsoon">BLOG</a>
+            </li>
+            <li class="nav-item dropdown view">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Pages
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#comingsoon">profile</a>
+                <a class="dropdown-item" href="{% url 'users:course' %}">Course Details</a>
+                <a class="dropdown-item" href="#comingsoon">Notice</a>
+                <a class="dropdown-item" href="{% url 'book_list'%}">Research</a>
+                <a class="dropdown-item" href="#comingsoon">Event Details</a>
+              </div>
+            </li>
+            <li class="nav-item @@contact">
+              <a class="nav-link" href="#comingsoon">CONTACT</a>
+            </li>
+            
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+<!-- /header -->
+<!-- Modal -->
+<!-- hero slider -->
+<section class="hero-section overlay bg-cover" data-background="{% static 'images/success-story.jpg' %}">
+  <div class="container">
+    <div class="hero-slider">
+      <!-- slider item -->
+      <div class="hero-slider-item">
+        <div class="row">
+          <div class="col-md-8">
+            <h1 class="text-white" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".1">Your bright future is our mission</h1>
+            <p class="text-muted mb-4" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".4">Thank you for visiting us.
+              Are you tired of searching for the best PDFS and books on google for your research, assignment, revision, mention them all. 
+              Let me gladly welcom you to this site where the hard work has been done for you. 
+            </p>
+            <a href="{% url 'users:sign-up' %}" class="btn btn-primary" data-animation-out="fadeOutRight" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInLeft" data-delay-in=".7">Apply now</a>
+          </div>
+        </div>
+      </div>
+      <!-- slider item -->
+      <div class="hero-slider-item">
+        <div class="row">
+          <div class="col-md-8">
+            <h1 class="text-white" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".1">Your bright future is our mission</h1>
+            <p class="text-muted mb-4" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".4">Thank you for visiting us.
+              Caution the app is still under development! Most of its features will improve greatly over time. That doesn't mean its not cool it infact Dope. 
+              Hundreds of high quality pdfs waiting for you to download.
+            </p>
+            <a href="{% url 'users:sign-up' %}" class="btn btn-primary" data-animation-out="fadeOutUp" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInDown" data-delay-in=".7">Apply now</a>
+          </div>
+        </div>
+      </div>
+      <!-- slider item -->
+      <div class="hero-slider-item">
+        <div class="row">
+          <div class="col-md-8">
+            <h1 class="text-white" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">Your bright future is our mission</h1>
+            <p class="text-muted mb-4" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".4">Thank you for visiting us.
+              That already seems too good to be true to add on that all the pdfs in this site are wait for it FREEEEEE. 
+              You will not spend even a buck here. Only Your bundles offcourse. That being said if you appreciate the hard work put in 
+              you can buy us a cup of coffee. It will help us greatly. Thanks 
+              
+            </p>
+            <a href="{% url 'users:sign-up' %}" class="btn btn-primary" data-animation-out="fadeOutDown" data-delay-out="5" data-duration-in=".3" data-animation-in="zoomIn" data-delay-in=".7">Apply now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+<!-- /hero slider -->
+
+<!-- banner-feature -->
+
+<!-- /banner-feature -->
+<!--main -->
+<main>
+  {% block content %}
+  {% endblock %}
+</main>
+<!-- about us -->
+{% if not form %}
+<section class="section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 order-2 order-md-1">
+        <h2 class="section-title">About EduApp</h2>
+        <p>Caution the app is still under development! Most of its features will improve greatly over time. If there is a feature that you may
+        to need but is not present, you may contact us on the contacts given or send us an email on the given email address.</p>
+        <a href="{% url 'users:aboutus' %}" class="btn btn-primary-outline">Learn more</a>
+      </div>
+      <div class="col-md-6 order-1 order-md-2 mb-4 mb-md-0">
+        <img class="img-fluid w-100" src="{% static 'images/about-us.jpg' %}" alt="about image">
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <!-- newsletter -->
+  
+  <!-- footer content -->
+  <div class="footer bg-footer section border-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-sm-8 mb-5 mb-lg-0">
+          <!-- logo -->
+          <a class="logo-footer" href="#"><img class="img-fluid mb-4" src="{% static 'images/EduApplogo.png' %}" alt="logo"></a>
+          <ul class="list-unstyled">
+            <li class="mb-2">Nairobi, Kenya</li>
+            <li class="mb-2">+254 (7) 2881 8475</li>
+            <li class="mb-2">+254 (7) 1729 7097</li>
+            <li class="mb-2">MegaUkrahtech@gmail.com</li>
+          </ul>
+        </div>
+        <!-- company -->
+        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+          <h4 class="text-white mb-5">COMPANY</h4>
+          <ul class="list-unstyled">
+            <li class="mb-3"><a class="text-color" href="{% url 'users:aboutus' %}">About Us</a></li>
+           <!-- <li class="mb-3"><a class="text-color" href="#comingsoon">Our Teacher</a></li>-->
+            <li class="mb-3"><a class="text-color" href="#comingsoon">Contact</a></li>
+            <!--<li class="mb-3"><a class="text-color" href="#comingsoon">Blog</a></li>-->
+          </ul>
+        </div>
+        <!-- links -->
+        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+          <h4 class="text-white mb-5">LINKS</h4>
+          <ul class="list-unstyled">
+            <li class="mb-3"><a class="text-color" href="{% url 'users:course' %}">Courses</a></li>
+            <li class="mb-3"><a class="text-color" href="#comingsoon">Events</a></li>
+            <li class="mb-3"><a class="text-color" href="{% url 'users:faqs' %}">FAQs</a></li>
+          </ul>
+        </div>
+        <!-- support -->
+        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+          <h4 class="text-white mb-5">SUPPORT</h4>
+          <ul class="list-unstyled">
+            <li class="mb-3"><a class="text-color" href="#">Forums</a></li>
+            <li class="mb-3"><a class="text-color" href="#">Documentation</a></li>
+            <li class="mb-3"><a class="text-color" href="#">Language</a></li>
+            <li class="mb-3"><a class="text-color" href="#">Release Status</a></li>
+          </ul>
+        </div>
+        <!-- support -->
+        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-5 mb-md-0">
+          <h4 class="text-white mb-5">RECOMMEND</h4>
+          <ul class="list-unstyled">
+            <li class="mb-3"><a class="text-color" href="#">WordPress</a></li>
+            <li class="mb-3"><a class="text-color" href="#">LearnPress</a></li>
+            <li class="mb-3"><a class="text-color" href="#">WooCommerce</a></li>
+            <li class="mb-3"><a class="text-color" href="#">bbPress</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- copyright -->
+  <div class="copyright py-4 bg-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-7 text-sm-left text-center">
+          <p class="mb-0">Copyright
+            <script>
+              var CurrentYear = new Date().getFullYear()
+              document.write(CurrentYear);
+            </script> 
+            © EduApp</p>
+        </div>
+        <div class="col-sm-5 text-sm-right text-center">
+          <ul class="list-inline">
+            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="fa fa-facebook text-primary"></i></a></li>
+            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="fa fa-twitter text-primary"></i></a></li>
+            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="fa fa-linkedin text-primary"></i></a></li>
+            <li class="list-inline-item"><a class="d-inline-block p-2" href="#"><i class="fa fa-instagram text-primary"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+{% endif %}
+<!-- /footer -->
+
+<!-- jQuery -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!-- Bootstrap JS -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- slick slider -->
+<script src="{% static 'js/slick.min.js' %}"></script>
+<!-- aos -->
+<script src="{% static 'js/aos.js' %}"></script>
+<!-- venobox popup -->
+<script src="{% static 'js/venobox.min.js' %}"></script>
+<!-- filter -->
+<script src="{% static 'js/jquery.filterizr.min.js' %}"></script>
+<!-- google map -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
+<script src="{% static 'js/gmap.js' %}"></script>
+
+<!-- Main Script -->
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

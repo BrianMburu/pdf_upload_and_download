@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}
+	Home
+{% endblock %}
+{% block content %}
+  <div class="container-fluid section p-0 overflow-hidden">
+    <div class=" row" >
+      <div  class="jumbotron col-12">
+        <h1>Hi there Welcome To EDU APP!!</h1>
+        {% if user.is_authenticated%}
+          <h2>Hello {{ user.username }}.</h2>
+          <p>Do you want to access knowledge related to your course, We have notes prepared by first class honors graduates. 
+            You have free access to the first semester's notes(for now), more will be added later. In a weeks time we will also attach  
+          youtube video links related to the topic. </p>
+        {% else %}
+          <h2>You are not logged in!</h2>
+          <h3>Please <a href="{% url 'users:sign-up' %}">Register</a> or <a href="{% url 'login' %}">Login</a> from the menu to view full content.</h3>
+          <p>Caution! this site is still in development. Your opinion on what features to include will gladly be accepted.</p><br/>
+          <p>Thank you for visiting this site 😁.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="pb-1">
+    <h3>&nbsp<i class="fas fa-gem"></i>&nbspThe Most Recent Books</h3>
+  </div>
+  {% for book in books %}
+    <div class="container-fluid p-1">
+      <div class="row">
+        <div class="col-12 mt-3">
+            <div class="card p-0 border-primary rounded-1 hover-shadow" style="max-width: 650px;">
+                <div class="row no-gutters">
+                    <div class="col-sm-5 img-square-wrapper" style="background: #868e96;">
+                        {% if book.cover  %}
+                          <img src="{{ book.cover.url }}" class="card-img-top h-100" alt="{{ book.title }}"style="max-height:190px;!important">
+                        {% else %}
+                          <span class="text-muted">No cover</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <p class="card-info">Book Author: {{ book.author }}</p>
+                              <a href="{{ book.pdf.url }}" class="btn btn-info btn-sm" target="_blank">
+                                Download PDF
+                              </a>
+                            <p class="card-text bg-light text-dark">Uploaded Date: {{ book.pub_date }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      </div>
+    {% endfor %}
+{% endblock %}

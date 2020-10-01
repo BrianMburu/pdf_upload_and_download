@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+  {% block content %}
+  <div class="container-fluid w-100" style="background-color: rgb(15, 15, 112);">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg  p-0">
+        <a class="navbar-brand" href="{% url 'users:home' %}"><img src="{% static 'images/EduApplogo.png' %}" alt="logo"></a>
+        <h2 class="navbar-item text-light text-center">Search For Books/Pdfs Here</h2>
+      </nav>
+    </div>
+  </div>
+  {% if user.is_authenticated %}
+    <div class="container p-4">
+        <div class="container w-100 bg-gray "style="padding:1.5em">
+          <div class="panel">
+            <div class="panel-body">
+              <a href="{% url 'users:home' %}" class="icon"><i class="fa fa-home"></i> Home</a>
+              <form class="search-form form" action="" method="get">
+                <p>{{form.as_p}}</p>
+                <a class="btn btn-info hover-shadow" href="{% url 'searched_books' %}">Original-List</a>
+                <button type="submit" class="btn btn-success hover-shadow">Search</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <table class="table table-striped"></table>
+        
+        {% for book in object_list %}
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12 mt-3">
+                  <div class="card p-0 border-primary rounded-1 hover-shadow" style="max-width: 650px;">
+                      <div class="row no-gutters">
+                          <div class="col-sm-5 img-square-wrapper" style="background: #868e96;">
+                              {% if book.cover  %}
+                                <img src="{{ book.cover.url }}" class="card-img-top h-100" alt="{{ book.title }}"style="max-height:190px;!important">
+                              {% else %}
+                                <span class="text-muted">No cover</span>
+                              {% endif %}
+                          </div>
+                          <div class="col-sm-7">
+                              <div class="card-body">
+                                  <h5 class="card-title">{{ book.title }}</h5>
+                                  <p class="card-info">Book Author: {{ book.author }}</p>
+                                    <a href="{{ book.pdf.url }}" class="btn btn-info btn-sm" target="_blank">
+                                      Download PDF
+                                    </a>
+                                  <p class="card-text bg-light text-dark">Uploaded Date: {{ book.pub_date }}</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            </div>
+          {% endfor %}
+        </table>
+    </div>
+    {% else %}
+        <div class="container-fluid section">
+            <div class=" row" >
+                <div  class="jumbotron col-12">
+                    <h2>You are not logged in!</h2>
+                    <h3>Please Register or Login from the menu to download this content thanks.</h3>
+                </div>
+            </div>    
+        </div>
+    {% endif %}
+  {% endblock %}

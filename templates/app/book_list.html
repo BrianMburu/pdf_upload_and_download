@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  {% block content_header %}
+  <div class= "container"style="background-color: rgb(94, 134, 160);">
+    <h2 class="text-center">Available Books and Pdfs</h2>
+  </div>
+    <!--<p>
+      <a href="{% url 'upload_book' %}" class="btn btn-primary">Upload book</a>
+    </p>-->
+    <!--
+  {% endblock %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="card p-0 border-primary rounded-0 hover-shadow mb-5">
+                <div class="card-horizontal">
+                    <div class="img-square-wrapper" >
+                        {% if book.cover  %}
+                        <img class="card-img-left rounded-0" src="{{ book.cover.url }}" alt="{{ book.title }}" style=" width: 300px;important height:300px;!important">
+                        {% else %}
+                          <span class="text-muted">No cover</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">{{ book.title }}</h4>
+                        <p class="card-text">{{ book.author }}</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">
+                    <a href="{{ book.pdf.url }}" class="btn btn-primary btn-sm" target="_blank">
+                      Download PDF
+                    </a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+{% for book in books %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 mt-3">
+        <div class="card p-0 border-primary rounded-1 hover-shadow" style="max-width: 650px;">
+            <div class="row no-gutters">
+                <div class="col-sm-5 img-square-wrapper" style="background: #868e96;">
+                    {% if book.cover  %}
+                      <img src="{{ book.cover.url }}" class="card-img-top h-100" alt="{{ book.title }}"style="max-height:190px;!important">
+                    {% else %}
+                      <span class="text-muted">No cover</span>
+                    {% endif %}
+                </div>
+                <div class="col-sm-7">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text">Book Author: {{ book.author }}</p>
+                        <a href="{{ book.pdf.url }}" class="btn btn-info btn-sm" target="_blank">
+                          Download PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+{% endfor %}
+{% else %}
+  <div class="container-fluid section">
+      <div class=" row" >
+          <div  class="jumbotron col-12">
+              <h2>You are not logged in!</h2>
+              <h3>Please Register or Login from the menu to view full content thanks.</h3>
+          </div>
+      </div>    
+  </div>
+  {% endif %}
+  
+{% endblock %}

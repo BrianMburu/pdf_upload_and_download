@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load common%}
+{% block content %}
+<!-- courses -->
+<div class="container-fluid " style="background-color: rgb(94, 134, 160);">
+  <h2 class="text-center">Hello {{user.username}} the following are Books for {{ user.profile.course }} Course</h2>
+</div>
+ <!--{% set course = user.profile.course%}-->
+ {% for book in books %}
+ <div class="container-fluid">
+  <div class="row">
+    <div class="col-12 mt-3">
+        <div class="card p-0 border-primary rounded-1 hover-shadow" style="max-width: 650px;">
+            <div class="row no-gutters">
+                <div class="col-sm-5 img-square-wrapper" style="background: #868e96;">
+                    {% if book.cover  %}
+                      <img src="{{ book.cover.url }}" class="card-img-top h-100" alt="{{ book.title }}"style="max-height:190px;!important">
+                    {% else %}
+                      <span class="text-muted">No cover</span>
+                    {% endif %}
+                </div>
+                <div class="col-sm-7">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-info">Book Author: {{ book.author }}</p>
+                          <a href="{{ book.pdf.url }}" class="btn btn-info btn-sm" target="_blank">
+                            Download PDF
+                          </a>
+                        <p class="card-text bg-light text-dark">Uploaded on {{ book.pub_date }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+{% endfor %}
+  <!-- /course list -->
+  {% endblock %}

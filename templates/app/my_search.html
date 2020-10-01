@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h1>{{ search | title }}</h1>
+        {% if user.is_authenticated %}
+        <div class="row justify-content-center">
+            {% for post in final_posting %}
+            <div class="col-lg-4 col-sm-6 mb-5">
+                <div class="card p-0 border-primary rounded-0 hover-shadow">
+                    <a href="{{ post.1 }}">
+                        <img style=" height:300px;overflow: hidden;" class="card-img-top rounded-0" src="{{ post.3 }}" alt="course thumb">
+                    </a>
+                    <div class="card-body">
+                        <h4 class="card-title">{{ search }}</h4>
+                        <p class="card-text mb-4">{{ post.0 }}</p>
+                    </div>
+                        <a href="{{ post.1 }}" class="btn btn-primary btn-sm">View listing: price {{ post.2 }}</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="container-fluid section">
+            <div class=" row" >
+                <div  class="jumbotron col-12">
+                    <h2>You are not logged in!</h2>
+                    <h3>Please Register or Login from the menu to view full content thanks.</h3>
+                </div>
+            </div>    
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

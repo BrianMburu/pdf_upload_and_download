@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+        <div class="col-md-4">
+            <!-- Default form register -->
+            <form class="border mt-5 border-info rounded-lg text-center p-3" method="post">
+                {% csrf_token %}
+                <p class="h4 mb-4 text-info text-center">Sign up</p>
+
+                 {{ user_form.as_p }}
+                 {{course_form}}
+
+                {% for field in user_form %}
+                    <p>
+                        {{ field.label_tag }}
+                        {{ field }}
+                        <!-- {% if field.help_text %}
+                        <small style="color: grey">{{ field.help_text }}</small>
+                        {% endif %} -->
+                        {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </p>
+                {% endfor %}
+                {%for field in course_form %}
+                    <p>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                    </p>
+                {% endfor %}
+                <button class="btn btn-info my-4 btn-block" type="submit">Save changes</button>
+
+            </form>     
+        </div>
+
+{% endblock %}
